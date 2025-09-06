@@ -1,0 +1,59 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Login() {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const PrivateRoute = ({ children }) => {
+    const isAdmin = localStorage.getItem("isAdmin"); // match Login.jsx
+    return isAdmin ? children : <Navigate to="/login" />;
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("isAdmin", "true"); // simple flag for private route
+        navigate("/admin");
+      } else {
+        setError(data.error || "Invalid credentials");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Network error. Please try again.");
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto mt-20 p-6 border rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+
+        <input
+          type="password"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full"
+        />
+        <button className="bg-green-600 text-white px-4 py-2 rounded w-full">
+          Login
+        </button>
+      </form>
+    </div>
+  );
+}

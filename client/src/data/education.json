@@ -1,0 +1,14 @@
+[
+  {
+    "school": "University of XYZ",
+    "degree": "Bachelor of Computer Science",
+    "timeframe": "2018 - 2022",
+    "description": "Graduated with honors, focusing on software development and data science."
+  },
+  {
+    "school": "High School ABC",
+    "degree": "High School Diploma",
+    "timeframe": "2014 - 2018",
+    "description": "Completed high school with a focus on science and mathematics."
+  }
+]
