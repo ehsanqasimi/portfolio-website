@@ -6,12 +6,6 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const PrivateRoute = ({ children }) => {
-    const isAdmin = localStorage.getItem("isAdmin"); // match Login.jsx
-    return isAdmin ? children : <Navigate to="/login" />;
-  };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -26,10 +20,10 @@ export default function Login() {
       const data = await res.json();
 
       if (data.success) {
-        localStorage.setItem("isAdmin", "true"); // simple flag for private route
+        localStorage.setItem("isAdmin", "true");
         navigate("/admin");
       } else {
-        setError(data.error || "Invalid credentials");
+        setError(data.error || "Invalid password");
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -42,10 +36,9 @@ export default function Login() {
       <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
-
         <input
           type="password"
-          placeholder="Enter password"
+          placeholder="Enter admin password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="border p-2 w-full"

@@ -28,7 +28,7 @@ function Education() {
   }
 
   return (
-    <div className="p-8">
+    <div className="px-4 lg:px-70 py-25">
       <h1 className="text-3xl font-bold text-green-700 mb-6">Education</h1>
       <Timeline items={education} />
     </div>

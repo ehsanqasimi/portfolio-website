@@ -30,7 +30,7 @@ function Experience() {
 
 
   return (
-    <div className="p-8">
+    <div className="px-4 lg:px-50 py-25">
       <h1 className="text-3xl font-bold text-green-700 mb-6">Experience</h1>
       <Timeline items={experience} />
     </div>
