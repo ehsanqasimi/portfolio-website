@@ -1,7 +1,5 @@
-# .coolify.yml
 version: "1"
 services:
-  # Backend Service
   backend:
     type: "node"
     buildCommand: "cd server && npm install"
@@ -14,7 +12,6 @@ services:
     ports:
       - "3001"
 
-  # MongoDB Service
   mongo:
     type: "database"
     image: "mongo:6.0"
@@ -23,13 +20,13 @@ services:
         path: "/data/db"
     restart: "unless-stopped"
 
-  # Frontend Service
   frontend:
     type: "static"
     buildCommand: "cd client && npm install && npm run build"
     publishDirectory: "client/build"
     environmentVariables:
       - key: "REACT_APP_API_URL"
-        value: "http://backend:3001"  # Points to backend inside Docker network
+        value: "http://backend:3001"
     domains:
-      - "mohamad.luckytech.dev"  # Replace with actual domain
+      - "mohamad.luckytech.dev"
+    isSPA: true
