@@ -1,0 +1,35 @@
+# .coolify.yml
+version: "1"
+services:
+  # Backend Service
+  backend:
+    type: "node"
+    buildCommand: "cd server && npm install"
+    startCommand: "cd server && node index.js"
+    environmentVariables:
+      - key: "PORT"
+        value: "3001"
+      - key: "MONGODB_URI"
+        value: "mongodb://mongo:27017/portfolio_db"
+    ports:
+      - "3001"
+
+  # MongoDB Service
+  mongo:
+    type: "database"
+    image: "mongo:6.0"
+    volumes:
+      - name: "mongodb_data"
+        path: "/data/db"
+    restart: "unless-stopped"
+
+  # Frontend Service
+  frontend:
+    type: "static"
+    buildCommand: "cd client && npm install && npm run build"
+    publishDirectory: "client/build"
+    environmentVariables:
+      - key: "REACT_APP_API_URL"
+        value: "http://backend:3001"  # Points to backend inside Docker network
+    domains:
+      - "your-domain.com"  # Replace with actual domain
