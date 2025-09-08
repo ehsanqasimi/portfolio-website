@@ -7,11 +7,11 @@ import { motion } from "framer-motion";
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.API_BASE;
+  const VITE_API_BASE = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/projects`);
+        const response = await axios.get(`${VITE_API_BASE}/projects`);
         // Ensure response is always an array
         const data = Array.isArray(response.data) ? response.data : [];
         setProjects(data);
@@ -23,7 +23,7 @@ function Projects() {
       }
     };
     fetchProjects();
-  }, []);
+  }, [VITE_API_BASE]);
 
   return (
     <div className="px-6 md:px-12 py-12 space-y-12">

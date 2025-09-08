@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 function Home() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.API_BASE;
+  const VITE_API_BASE = import.meta.env.VITE_API_BASE;
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/projects`);
+        const response = await axios.get(`${VITE_API_BASE}/projects`);
         // Ensure it's always an array before slicing
         const data = Array.isArray(response.data) ? response.data : [];
         setProjects(data.slice(0, 2));
@@ -25,7 +25,7 @@ function Home() {
       }
     };
     fetchProjects();
-  }, [API_BASE]);
+  }, [VITE_API_BASE]);
 
   const skills = [
     "React",

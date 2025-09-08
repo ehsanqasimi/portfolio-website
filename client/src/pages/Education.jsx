@@ -6,12 +6,12 @@ import Timeline from "../components/Timeline";
 function Education() {
   const [education, setEducation] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = import.meta.env.API_BASE;
+  const VITE_API_BASE = import.meta.env.VITE_API_BASE;
 
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/education`);
+        const response = await axios.get(`${VITE_API_BASE}/education`);
         // Ensure the response is always an array
         const data = Array.isArray(response.data) ? response.data : [];
         setEducation(data);
@@ -24,7 +24,7 @@ function Education() {
       }
     };
     fetchEducation();
-  }, []);
+  }, [VITE_API_BASE]);
 
   if (loading) {
     return <div className="p-8">Loading...</div>;
