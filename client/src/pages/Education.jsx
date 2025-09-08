@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Timeline from "../components/Timeline";
 
-
 function Education() {
-
   const [education, setEducation] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,10 +10,13 @@ function Education() {
     const fetchEducation = async () => {
       try {
         const response = await axios.get("/api/education");
-        setEducation(response.data);
-        console.log(response.data);
+        // Ensure the response is always an array
+        const data = Array.isArray(response.data) ? response.data : [];
+        setEducation(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching education data:", error);
+        setEducation([]); // fallback to empty array on error
       } finally {
         setLoading(false);
       }
@@ -25,6 +26,12 @@ function Education() {
 
   if (loading) {
     return <div className="p-8">Loading...</div>;
+  }
+
+  if (education.length === 0) {
+    return (
+      <div className="p-8 text-gray-500">No education data available.</div>
+    );
   }
 
   return (

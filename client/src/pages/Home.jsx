@@ -13,9 +13,12 @@ function Home() {
     const fetchProjects = async () => {
       try {
         const response = await axios.get("/api/projects");
-        setProjects(response.data.slice(0, 2));
+        // Ensure it's always an array before slicing
+        const data = Array.isArray(response.data) ? response.data : [];
+        setProjects(data.slice(0, 2));
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setProjects([]); // fallback to empty array on error
       } finally {
         setLoading(false);
       }
@@ -95,7 +98,7 @@ function Home() {
         </h2>
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
-        ) : (
+        ) : projects.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((proj, index) => (
               <motion.div
@@ -111,6 +114,8 @@ function Home() {
               </motion.div>
             ))}
           </div>
+        ) : (
+          <p className="text-center text-gray-500">No projects available.</p>
         )}
 
         <div className="mt-12 text-center">
