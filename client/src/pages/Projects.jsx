@@ -11,9 +11,12 @@ function Projects() {
     const fetchProjects = async () => {
       try {
         const response = await axios.get("/api/projects");
-        setProjects(response.data);
+        // Ensure response is always an array
+        const data = Array.isArray(response.data) ? response.data : [];
+        setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setProjects([]); // fallback to empty array on error
       } finally {
         setLoading(false);
       }
@@ -29,11 +32,11 @@ function Projects() {
 
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
-      ) : (
+      ) : projects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((proj, index) => (
             <motion.div
-              key={proj._id}
+              key={proj._id || index}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
@@ -42,6 +45,8 @@ function Projects() {
             </motion.div>
           ))}
         </div>
+      ) : (
+        <p className="text-center text-gray-500">No projects available.</p>
       )}
 
       {/* Optional Call to Action */}
