@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api"; // later change to VPS domain
+const API_BASE = import.meta.env.API_BASE
 
 export const getProjects = async () => {
     const res = await fetch(`${API_BASE}/projects`);

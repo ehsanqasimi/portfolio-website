@@ -18,7 +18,7 @@ function Contact() {
     setError(false);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/contact", form);
+      const res = await axios.post("https://api.luckytech.dev/api/contact", form);
 
       if (res.data.success) {
         setStatus("✅ Message sent successfully!");

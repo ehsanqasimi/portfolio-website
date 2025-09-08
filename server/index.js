@@ -12,7 +12,8 @@ import contactRoutes from "./routes/contact.js";
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(cors({ origin: ["https://mohamad.luckytech.dev"], credentials: true }));
+app.use(cors());
 app.use(express.json());
 
 // Routes
