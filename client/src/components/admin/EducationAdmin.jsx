@@ -33,7 +33,7 @@ export default function EducationAdmin() {
     try {
       if (editingId) {
         // Update existing record
-        await fetch(`${API_BASE}/api/education/${editingId}`, {
+        await fetch(`${API_BASE}/education/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -41,7 +41,7 @@ export default function EducationAdmin() {
         setEditingId(null);
       } else {
         // Add new record
-        await fetch(`${API_BASE}/api/education`, {
+        await fetch(`${API_BASE}/education`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -56,7 +56,7 @@ export default function EducationAdmin() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${API_BASE}/api/education/${id}`, {
+      await fetch(`${API_BASE}/education/${id}`, {
         method: "DELETE",
       });
       loadEducation();

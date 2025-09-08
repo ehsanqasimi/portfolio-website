@@ -33,7 +33,7 @@ export default function ExperienceAdmin() {
     try {
       if (editingId) {
         // Update existing record
-        await fetch(`${VITE_API_BASE}/api/experience/${editingId}`, {
+        await fetch(`${VITE_API_BASE}/experience/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -41,7 +41,7 @@ export default function ExperienceAdmin() {
         setEditingId(null);
       } else {
         // Add new record
-        await fetch(`${VITE_API_BASE}/api/experience`, {
+        await fetch(`${VITE_API_BASE}/experience`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -56,7 +56,7 @@ export default function ExperienceAdmin() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${VITE_API_BASE}/api/experience/${id}`, {
+      await fetch(`${VITE_API_BASE}/experience/${id}`, {
         method: "DELETE",
       });
       loadExperience();
