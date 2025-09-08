@@ -10,17 +10,20 @@ export default function ExperienceAdmin() {
   });
   const [editingId, setEditingId] = useState(null);
 
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
   useEffect(() => {
     loadExperience();
-  }, []);
+  }, [API_BASE]);
 
   const loadExperience = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/experience");
-      const data = await res.json();
+      const res = await fetch(`${API_BASE}/api/experience`);
+      const data = Array.isArray(await res.json()) ? await res.json() : [];
       setExperience(data);
     } catch (err) {
       console.error("Error fetching experience:", err);
+      setExperience([]); // fallback to empty array
     }
   };
 
@@ -29,7 +32,7 @@ export default function ExperienceAdmin() {
     try {
       if (editingId) {
         // Update existing record
-        await fetch(`http://localhost:5000/api/experience/${editingId}`, {
+        await fetch(`${API_BASE}/api/experience/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -37,7 +40,7 @@ export default function ExperienceAdmin() {
         setEditingId(null);
       } else {
         // Add new record
-        await fetch("http://localhost:5000/api/experience", {
+        await fetch(`${API_BASE}/api/experience`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -52,7 +55,7 @@ export default function ExperienceAdmin() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/experience/${id}`, {
+      await fetch(`${API_BASE}/api/experience/${id}`, {
         method: "DELETE",
       });
       loadExperience();

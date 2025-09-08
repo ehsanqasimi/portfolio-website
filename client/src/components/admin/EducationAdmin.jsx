@@ -10,18 +10,22 @@ export default function EducationAdmin() {
   });
   const [editingId, setEditingId] = useState(null);
 
+  // Use VITE_API_BASE, fallback to localhost
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
   // Load education records
   useEffect(() => {
     loadEducation();
-  }, []);
+  }, [API_BASE]);
 
   const loadEducation = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/education");
-      const data = await res.json();
+      const res = await fetch(`${API_BASE}/api/education`);
+      const data = Array.isArray(await res.json()) ? await res.json() : [];
       setEducation(data);
     } catch (err) {
       console.error("Error fetching education:", err);
+      setEducation([]);
     }
   };
 
@@ -30,7 +34,7 @@ export default function EducationAdmin() {
     try {
       if (editingId) {
         // Update existing record
-        await fetch(`http://localhost:5000/api/education/${editingId}`, {
+        await fetch(`${API_BASE}/api/education/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -38,7 +42,7 @@ export default function EducationAdmin() {
         setEditingId(null);
       } else {
         // Add new record
-        await fetch("http://localhost:5000/api/education", {
+        await fetch(`${API_BASE}/api/education`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -53,7 +57,7 @@ export default function EducationAdmin() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/education/${id}`, {
+      await fetch(`${API_BASE}/api/education/${id}`, {
         method: "DELETE",
       });
       loadEducation();
