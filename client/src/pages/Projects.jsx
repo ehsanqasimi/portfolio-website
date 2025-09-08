@@ -3,14 +3,15 @@ import Card from "../components/Card";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const API_BASE = import.meta.env.API_BASE;
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("/api/projects");
+        const response = await axios.get(`${API_BASE}/projects`);
         // Ensure response is always an array
         const data = Array.isArray(response.data) ? response.data : [];
         setProjects(data);

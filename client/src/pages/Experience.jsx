@@ -5,11 +5,11 @@ import axios from "axios";
 function Experience() {
   const [experience, setExperience] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const API_BASE = import.meta.env.API_BASE;
   useEffect(() => {
     const fetchExperience = async () => {
       try {
-        const response = await axios.get("/api/experience");
+        const response = await axios.get(`${API_BASE}/experience`);
         // Ensure it's always an array
         const data = Array.isArray(response.data) ? response.data : [];
         setExperience(data);
@@ -22,7 +22,7 @@ function Experience() {
       }
     };
     fetchExperience();
-  }, []);
+  }, [API_BASE]);
 
   if (loading) {
     return <div className="p-8">Loading...</div>;

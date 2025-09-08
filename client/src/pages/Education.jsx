@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Timeline from "../components/Timeline";
 
+
 function Education() {
   const [education, setEducation] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_BASE = import.meta.env.API_BASE;
 
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await axios.get("/api/education");
+        const response = await axios.get(`${API_BASE}/education`);
         // Ensure the response is always an array
         const data = Array.isArray(response.data) ? response.data : [];
         setEducation(data);
