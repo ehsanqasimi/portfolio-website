@@ -18,7 +18,7 @@ export default function ExperienceAdmin() {
 
   const loadExperience = async () => {
     try {
-      const res = await fetch(`${VITE_API_BASE}/api/experience`);
+      const res = await fetch(`${VITE_API_BASE}/experience`);
       const json = await res.json();
       const data = Array.isArray(json) ? json : [];
       setExperience(data);

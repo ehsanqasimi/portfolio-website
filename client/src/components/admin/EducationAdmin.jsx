@@ -18,7 +18,7 @@ export default function EducationAdmin() {
 
   const loadEducation = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/education`);
+      const res = await fetch(`${API_BASE}/education`);
       const json = await res.json();
       const data = Array.isArray(json) ? json : [];
       setEducation(data);
