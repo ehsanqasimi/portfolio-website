@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const VITE_API_BASE = import.meta.env.VITE_API_BASE;
+
 export default function ExperienceAdmin() {
   const [experience, setExperience] = useState([]);
   const [form, setForm] = useState({
@@ -10,16 +12,15 @@ export default function ExperienceAdmin() {
   });
   const [editingId, setEditingId] = useState(null);
 
-  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
   useEffect(() => {
     loadExperience();
-  }, [API_BASE]);
+  }, []);
 
   const loadExperience = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/experience`);
-      const data = Array.isArray(await res.json()) ? await res.json() : [];
+      const res = await fetch(`${VITE_API_BASE}/api/experience`);
+      const json = await res.json();
+      const data = Array.isArray(json) ? json : [];
       setExperience(data);
     } catch (err) {
       console.error("Error fetching experience:", err);
@@ -32,7 +33,7 @@ export default function ExperienceAdmin() {
     try {
       if (editingId) {
         // Update existing record
-        await fetch(`${API_BASE}/api/experience/${editingId}`, {
+        await fetch(`${VITE_API_BASE}/api/experience/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -40,7 +41,7 @@ export default function ExperienceAdmin() {
         setEditingId(null);
       } else {
         // Add new record
-        await fetch(`${API_BASE}/api/experience`, {
+        await fetch(`${VITE_API_BASE}/api/experience`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
@@ -55,7 +56,7 @@ export default function ExperienceAdmin() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${API_BASE}/api/experience/${id}`, {
+      await fetch(`${VITE_API_BASE}/api/experience/${id}`, {
         method: "DELETE",
       });
       loadExperience();

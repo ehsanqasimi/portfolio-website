@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 export default function EducationAdmin() {
   const [education, setEducation] = useState([]);
   const [form, setForm] = useState({
@@ -10,18 +12,15 @@ export default function EducationAdmin() {
   });
   const [editingId, setEditingId] = useState(null);
 
-  // Use VITE_API_BASE, fallback to localhost
-  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
-  // Load education records
   useEffect(() => {
     loadEducation();
-  }, [API_BASE]);
+  }, []);
 
   const loadEducation = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/education`);
-      const data = Array.isArray(await res.json()) ? await res.json() : [];
+      const json = await res.json();
+      const data = Array.isArray(json) ? json : [];
       setEducation(data);
     } catch (err) {
       console.error("Error fetching education:", err);

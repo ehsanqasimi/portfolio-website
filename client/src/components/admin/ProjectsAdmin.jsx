@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const VITE_API_BASE = import.meta.env.VITE_API_BASE;
+
 export default function ProjectsAdmin() {
   const [projects, setProjects] = useState([]);
   const [form, setForm] = useState({
@@ -11,57 +13,43 @@ export default function ProjectsAdmin() {
   });
   const [editingId, setEditingId] = useState(null);
 
-  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
-  // Load projects
   useEffect(() => {
     loadProjects();
-  }, [API_BASE]);
+  }, []);
 
   const loadProjects = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/projects`);
-      const data = Array.isArray(await res.json()) ? await res.json() : [];
-      setProjects(data);
-    } catch (err) {
-      console.error("Error fetching projects:", err);
-      setProjects([]);
-    }
+    const res = await fetch(`${VITE_API_BASE}/projects`);
+    const data = await res.json();
+    setProjects(data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (editingId) {
-        // Update project
-        await fetch(`${API_BASE}/api/projects/${editingId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        });
-        setEditingId(null);
-      } else {
-        // Create new project
-        await fetch(`${API_BASE}/api/projects`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        });
-      }
-      setForm({ title: "", description: "", image: "", github: "", live: "" });
-      loadProjects();
-    } catch (err) {
-      console.error("Error saving project:", err);
+    if (editingId) {
+      // Update project
+      await fetch(`${VITE_API_BASE}/projects/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      setEditingId(null);
+    } else {
+      // Create new project
+      await fetch(`${VITE_API_BASE}/projects`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
     }
+    setForm({ title: "", description: "", image: "", github: "", live: "" });
+    loadProjects();
   };
 
   const handleDelete = async (id) => {
-    try {
-      await fetch(`${API_BASE}/api/projects/${id}`, { method: "DELETE" });
-      loadProjects();
-    } catch (err) {
-      console.error("Error deleting project:", err);
-    }
+    await fetch(`${VITE_API_BASE}/projects/${id}`, {
+      method: "DELETE",
+    });
+    loadProjects();
   };
 
   const handleEdit = (project) => {
