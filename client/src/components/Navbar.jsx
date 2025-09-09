@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "../assets/logo.png";
 
 
 
@@ -32,7 +31,7 @@ export default function Navbar() {
             transition-all duration-300 ease-in-out 
             transform hover:scale-105"
         >
-          <img src={logo} alt="Logo" className="h-15 w-15 inline mr-2" />
+          <i>Mohamad Ehsan Qasemi</i>
         </Link>
 
         {/* Desktop Links */}

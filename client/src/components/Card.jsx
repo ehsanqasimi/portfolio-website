@@ -1,7 +1,7 @@
 function Card({ title, description, image, github, live }) {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform">
-      <img src={image} alt={title} className="w-full h-48 object-cover" />
+      <img src={image} alt={title}  className="w-full h-48 object-cover" />
       <div className="p-4">
         <h2 className="text-xl font-bold text-green-700">{title}</h2>
         <p className="mt-2 text-green-900">{description}</p>

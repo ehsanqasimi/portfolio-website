@@ -3,6 +3,12 @@
 This is my personal portfolio website built with **React (Vite)**, **Node.js**, and **Tailwind CSS**.  
 It showcases my projects, skills, and contact form with email integration.
 
+
+## Screenshots
+![Desktop View](image.png)
+![Mobile View](image.png)
+
+
 ## 🚀 Tech Stack
 - React + Vite
 - Tailwind CSS

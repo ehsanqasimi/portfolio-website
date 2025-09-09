@@ -1,7 +1,6 @@
 import React from "react";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
 
 export default function Footer() {
   return (
@@ -10,7 +9,7 @@ export default function Footer() {
         {/* Logo / Name */}
         <div className="text-2xl font-bold">
           <Link to="/">
-            <img src={logo} alt="" className="h-15 w-15 inline mr-2" />
+            <i>Mohamad Ehsan Qasemi</i>
           </Link>
         </div>
 
