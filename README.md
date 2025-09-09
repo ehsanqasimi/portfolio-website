@@ -5,8 +5,8 @@ It showcases my projects, skills, and contact form with email integration.
 
 
 ## Screenshots
-![Desktop View](image.png)
-![Mobile View](image.png)
+![Desktop View](./client/src/assets/screenshots/desktop.png)
+![Mobile View](./client/src/assets/screenshots/mobile.png)
 
 
 ## 🚀 Tech Stack
