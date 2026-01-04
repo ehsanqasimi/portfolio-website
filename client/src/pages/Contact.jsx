@@ -1,39 +1,20 @@
-import { useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Linkedin, Github, Send } from "lucide-react";
+import { Mail, MapPin, Linkedin, Github } from "lucide-react";
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("");
-  const [error, setError] = useState(false);
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("Sending...");
-    setError(false);
-
-    try {
-      const res = await axios.post("https://api.luckytech.dev/api/contact", form);
-
-      if (res.data.success) {
-        setStatus("✅ Message sent successfully!");
-        setError(false);
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("❌ Failed to send message.");
-        setError(true);
+  useEffect(() => {
+    // Load Tally script for dynamic height handling
+    const script = document.createElement("script");
+    script.src = "https://tally.so/widgets/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
       }
-    } catch (err) {
-      console.error("Contact error:", err);
-      setStatus("❌ Server error. Please try again later.");
-      setError(true);
-    }
-  };
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white py-16 px-6 lg:px-12">
@@ -52,96 +33,69 @@ function Contact() {
           </p>
         </div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left - Contact Info */}
           <div className="space-y-8">
-            <div className="flex items-center gap-3">
-              <Mail className="text-green-600" />
-              <span className="text-green-900 text-lg">
-                ehsan@luckytech.dev
+            <div className="flex items-center gap-4 group">
+              <div className="p-3 bg-green-100 rounded-lg text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all">
+                <Mail size={24} />
+              </div>
+              <span className="text-green-900 text-lg font-medium">
+                info@luckytech.dev
               </span>
             </div>
-            <div className="flex items-center gap-3">
-              <MapPin className="text-green-600" />
-              <span className="text-green-900 text-lg">
-                Your City, Your Country
+
+            <div className="flex items-center gap-4 group">
+              <div className="p-3 bg-green-100 rounded-lg text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all">
+                <MapPin size={24} />
+              </div>
+              <span className="text-green-900 text-lg font-medium">
+                Merrylands West, NSW, Australia
               </span>
             </div>
-            <div className="flex gap-6 mt-8">
+
+            <div className="flex gap-4 pt-4">
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/mohamad-ehsan-qasemi-07529b2ba"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-600 hover:text-green-800 transition"
+                rel="noreferrer"
+                className="p-3 border border-green-200 text-green-600 rounded-full hover:bg-green-600 hover:text-white transition-all"
               >
-                <Linkedin size={28} />
+                <Linkedin size={20} />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/ehsanqasimi"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-600 hover:text-green-800 transition"
+                rel="noreferrer"
+                className="p-3 border border-green-200 text-green-600 rounded-full hover:bg-green-600 hover:text-white transition-all"
               >
-                <Github size={28} />
+                <Github size={20} />
               </a>
             </div>
           </div>
 
-          {/* Right - Contact Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            className="space-y-5 bg-white shadow-xl p-8 rounded-2xl border border-green-400"
-            initial={{ opacity: 0, x: 30 }}
+          {/* Right - Tally Form with Branding Crop */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
+            className="relative overflow-hidden rounded-2xl border border-green-100 shadow-lg bg-white"
+            /* The height of the container is slightly smaller than the iframe, 
+               and overflow-hidden clips the "Made with Tally" badge at the bottom.
+            */
+            style={{ height: "480px" }}
           >
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full border border-green-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full border border-green-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              value={form.message}
-              onChange={handleChange}
-              rows="5"
-              className="w-full border border-green-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold"
-            >
-              <Send size={18} /> Send Message
-            </button>
-          </motion.form>
+            <iframe
+              data-tally-src="https://tally.so/embed/7RbeR9?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              loading="lazy"
+              width="100%"
+              height="550" // Set height higher than the container to ensure the badge is in the overflow area
+              frameBorder="0"
+              title="Contact Form"
+              className="absolute top-0 left-0"
+            ></iframe>
+          </motion.div>
         </div>
-
-        {/* Status message */}
-        {status && (
-          <p
-            className={`mt-8 text-center font-medium ${
-              error ? "text-red-600" : "text-green-700"
-            }`}
-          >
-            {status}
-          </p>
-        )}
       </motion.div>
     </div>
   );

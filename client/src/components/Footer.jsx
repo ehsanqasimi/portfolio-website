@@ -35,7 +35,7 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex gap-4">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/ehsanqasimi"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition"
@@ -43,23 +43,23 @@ export default function Footer() {
             <Github size={20} />
           </a>
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://linkedin.com/in/mohamad-ehsan-qasemi-07529b2ba"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition"
           >
             <Linkedin size={20} />
           </a>
-          <a
+          {/* <a
             href="https://twitter.com/yourusername"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition"
           >
             <Twitter size={20} />
-          </a>
+          </a> */}
           <a
-            href="mailto:youremail@example.com"
+            href="mailto:info@luckytech.dev"
             className="hover:text-white transition"
           >
             <Mail size={20} />
@@ -69,7 +69,8 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="text-center text-green-200 text-sm mt-6">
-        &copy; {new Date().getFullYear()} Your Name. All rights reserved.
+        &copy; {new Date().getFullYear()} Mohamad Ehsan Qasemi. All rights
+        reserved.
       </div>
     </footer>
   );
