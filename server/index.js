@@ -12,7 +12,7 @@ import contactRoutes from "./routes/contact.js";
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: ["https://mohamad.luckytech.dev"], credentials: true }));
+app.use(cors({ origin: ["https://ehsan.luckytech.dev", "https://mohamad.luckytech.dev"], credentials: true }));
 
 app.use(express.json());
 
